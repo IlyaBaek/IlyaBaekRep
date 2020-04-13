@@ -1,0 +1,4 @@
+# Created at 2020-04-12T21:57:28.440
+Boot Manifest-JAR contains absolute paths in classpath 'E:\training\task1\OneDrive_2019-06-21\UnitTesting-master\target\test-classes'
+Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
+
