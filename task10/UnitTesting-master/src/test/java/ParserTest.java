@@ -50,7 +50,7 @@ public class ParserTest {
     @ParameterizedTest
     @EmptySource
     //@CsvSource({ "'anything', 3" })
-    @ValueSource(strings = {"C:/Windows/","src/test/resources/unexisting.json", "src/test/resources/unexisting","///unexisting.json","../unexisting.json","D:123::bat"} )
+    @ValueSource(strings = {"/usr;local/bin","src/test/r:esources/unexisting.json", "src/test/resources/unexisting","///unexisting.json","../unexisting.json","D:123::bat"} )
     public void noSuchFileExceptionTest(String unexistingFilePath){
         Assertions.assertThrows(NoSuchFileException.class, () -> parser.readFromFile(new File(unexistingFilePath)));
     }
