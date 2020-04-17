@@ -72,12 +72,4 @@ public class CartTest {
         ilyaCart.showItems();
         assertEquals(realItemCar+"\r\n", outShowItemsContent.toString());
     }
-
-    @Test
-    public void testCart() {
-        ilyaCart.deleteVirtualItem(game);
-
-        ilyaCart.showItems();
-        assertEquals(realItemCar+"\r\n", outShowItemsContent.toString());
-    }
 }
