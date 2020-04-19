@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Default Suite">
+    <test name="UnitTesting">
+        <parameter name="realItemString"  value="Class: class shop.RealItem; Name: KIA; Price: 20000.0; Weight: 1600.0"/>
+        <parameter name="virtualItemString"  value="Class: class shop.VirtualItem; Name: Star Wars; Price: 100.0; Size on disk: 36000.0"/>
+        <parameter name="value"  value="Class: class shop.RealItem; Name: KIA; Price: 20000.0; Weight: 1600.0"/>
+        <classes>
+            <class name="JsonParserTest"/>
+            <class name="CartTest"/>
+            <class name="VirtualItemTest"/>
+            <class name="RealItemTest"/>
+        </classes>
+    </test>
+    <test name="UnitTesting2">
+        <parameter name="value"  value="anotherone"/>
+        <groups>
+            <run>
+                <include name="ExceptionGroup"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="JsonParserTest"/>
+        </classes>
+    </test>
+</suite>
