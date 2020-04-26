@@ -17,6 +17,7 @@ public class CartTest {
         private String realItemCar;
         private VirtualItem game;
         private String virtualItemGame;
+        private double TAX = 0.2;
 
         @AfterMethod
         public void setOriginalSystemOut() {
@@ -43,7 +44,7 @@ public class CartTest {
 
         @Test
         public void testTotalPrice() {
-            double TAX = 0.2;
+
             Double expectedPrice = game.getPrice() + game.getPrice() * TAX + car.getPrice() + car.getPrice() * TAX;
 
             assertEquals(expectedPrice, ilyaCart.getTotalPrice());
@@ -64,11 +65,13 @@ public class CartTest {
         public void testDeleteRealItem() {
             final ByteArrayOutputStream outShowItemsContent1 = new ByteArrayOutputStream();
             System.setOut(new PrintStream(outShowItemsContent1));
+            double totalPriceWithoutCar = ilyaCart.getTotalPrice() - (car.getPrice() + car.getPrice()*TAX);
 
             ilyaCart.deleteRealItem(car);
 
             ilyaCart.showItems();
-            assertEquals(virtualItemGame+"\r\n", outShowItemsContent1.toString());
+            assertEquals(outShowItemsContent1.toString(), virtualItemGame+"\r\n");
+            assertEquals(ilyaCart.getTotalPrice(), totalPriceWithoutCar);
         }
 
 
@@ -76,11 +79,13 @@ public class CartTest {
         public void testDeleteVirtualItem() {
             final ByteArrayOutputStream outShowItemsContent2 = new ByteArrayOutputStream();
             System.setOut(new PrintStream(outShowItemsContent2));
+            double totalPriceWithoutGame = ilyaCart.getTotalPrice() - (game.getPrice() + game.getPrice()*TAX);
 
             ilyaCart.deleteVirtualItem(game);
 
             ilyaCart.showItems();
-            assertEquals(realItemCar+"\r\n", outShowItemsContent2.toString());
+            assertEquals(outShowItemsContent2.toString(),realItemCar+"\r\n");
+            assertEquals(ilyaCart.getTotalPrice(), totalPriceWithoutGame);
         }
     }
 
