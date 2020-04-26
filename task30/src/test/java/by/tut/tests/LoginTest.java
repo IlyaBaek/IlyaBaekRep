@@ -11,13 +11,13 @@ import static org.testng.Assert.assertEquals;
 import java.util.concurrent.TimeUnit;
 
 public class LoginTest {
-    WebDriver driver;
-    String login = "seleniumtests@tut.by";
-    String password = "123456789zxcvbn";
-    String URL = "https://www.tut.by/";
-    LoginPage objLoginPage;
-    HomePage objHomePage;
-    Task2AllByElements objAllElements;
+    private WebDriver driver;
+    private static final String login = "seleniumtests@tut.by";
+    private static final String password = "123456789zxcvbn";
+    private static final String URL = "https://www.tut.by/";
+    private LoginPage objLoginPage;
+    private HomePage objHomePage;
+    private Task2AllByElements objAllElements;
 
     @BeforeMethod
     public void setUp(){
