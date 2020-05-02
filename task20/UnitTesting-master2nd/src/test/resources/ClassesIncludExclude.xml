@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="only JsonParserTest class included">
+    <test name="UnitTesting">
+        <parameter name="value"  value="//123//1234//"/>
+        <classes>
+            <class name="JsonParserTest"/>
+        </classes>
+    </test>
+    <test name="UnitTesting2">
+        <parameter name="value"  value="anotherone"/>
+        <classes>
+            <class name="JsonParserTest"/>
+        </classes>
+    </test>
+</suite>
