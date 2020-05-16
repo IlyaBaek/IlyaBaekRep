@@ -1,5 +1,8 @@
 package tut.by.tests;
 
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
@@ -8,6 +11,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import tut.by.pages.HomePage;
 import tut.by.pages.LoginPage;
+
+import java.io.File;
 
 import static org.testng.Assert.assertEquals;
 
@@ -31,17 +36,18 @@ public class AuthorizationTest {
     }
 
     @Test
-    public void loginTest() {
+    public void loginTest() throws Exception {
         HomePage homePage = new HomePage(driver);
         homePage.openLoginWindow();
         LoginPage loginPage = new LoginPage(driver);
         loginPage.logIn(username,password);
 
+        this.takeScreenshot(driver,"E://homePageLogin.png");
         assertEquals(homePage.getCurrentUserText(), usertext);
     }
 
     @Test
-    public void logoutTest() {
+    public void logoutTest() throws Exception {
         HomePage homePage = new HomePage(driver);
         homePage.openLoginWindow();
         LoginPage loginPage = new LoginPage(driver);
@@ -49,6 +55,17 @@ public class AuthorizationTest {
 
         homePage.logOut();
 
+        this.takeScreenshot(driver,"E://homePageLogout.png");
         Assert.assertTrue(homePage.getUnauthorized());
+    }
+
+    public static void takeScreenshot(WebDriver driver, String filePath) throws Exception{
+        TakesScreenshot scrShot = ((TakesScreenshot)driver);
+
+        File srcFile = scrShot.getScreenshotAs(OutputType.FILE);
+
+        File DestFile = new File(filePath);
+
+        FileUtils.copyFile(srcFile,DestFile);
     }
 }
