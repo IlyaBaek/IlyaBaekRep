@@ -1,22 +1,27 @@
 package by.tut.tests;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import java.util.Collections;
-import java.util.List;
+
+import java.util.HashSet;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
+
 import static org.testng.Assert.assertEquals;
 
 @Test(groups = "task40")                                                                                                               //POINT 5
 public class MultiselectTest {
     private WebDriver driver;
     private static final String URL = "https://www.seleniumeasy.com/test/basic-select-dropdown-demo.html";
-    private By dropdownOption = By.cssSelector("select#multi-select option");
-    private int selectedItems;
+    private By dropDownList = By.name("States");
+    private Select statesDropdown;
+    private Random random = new Random();
+    private HashSet<Integer> randomOptions = new HashSet<>();
 
     @BeforeMethod
     public void setUp(){
@@ -33,27 +38,15 @@ public class MultiselectTest {
 
     @Test
     public void multiselectTest() {
-        //Preparation
-        List<WebElement> itemsIndDropdown = driver.findElements(dropdownOption);
-        Collections.shuffle(itemsIndDropdown);
+        statesDropdown = new Select( driver.findElement(dropDownList));
+        do {
+            randomOptions.add(random.nextInt(statesDropdown.getOptions().size()));
+        } while (randomOptions.size()<3);
 
-        //selecting random items
-        for (int i=0; i < 3; i++){
-            itemsIndDropdown.get(i).click();
-        }
+        randomOptions.forEach(option ->
+                statesDropdown.selectByIndex(option)
+        );
 
-        //Assert
-        for (WebElement webElement : itemsIndDropdown) {
-            String itemFromDropdownText;
-            if (webElement.isSelected()) {
-                itemFromDropdownText = webElement.getText();
-                System.out.println(itemFromDropdownText + " is selected");
-                selectedItems++;
-            } else {
-                itemFromDropdownText = webElement.getText();
-                System.out.println(itemFromDropdownText + " is not selected");
-            }
-        }
-        assertEquals(selectedItems,3, "3 Items should be selected");
+        assertEquals(statesDropdown.getOptions().size(),3, "3 Items should be selected");
     }
 }

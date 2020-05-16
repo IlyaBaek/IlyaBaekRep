@@ -17,6 +17,7 @@ public class WaitForUser {
     private static final String URL = "https://www.seleniumeasy.com/test/dynamic-data-loading-demo.html";
     private By getNewUserButton = By.cssSelector("button.btn");
     private By getUser = By.xpath("//div[@id='loading' and contains(text(), 'First Name')]");
+    private By getLoading = By.xpath("//div[@id='loading' and contains(text(), 'loading...')]");
 
     @BeforeMethod
     public void setUp(){
@@ -36,6 +37,8 @@ public class WaitForUser {
         WebDriverWait wait = new WebDriverWait(this.driver, 5);
         driver.findElement(getNewUserButton).click();
 
+        wait.until(ExpectedConditions.visibilityOfElementLocated(getLoading));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(getLoading));
         wait.until(ExpectedConditions.visibilityOfElementLocated(getUser));
     }
 }

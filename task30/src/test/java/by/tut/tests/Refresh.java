@@ -15,6 +15,7 @@ public class Refresh {
     private static final String URL = "https://www.seleniumeasy.com/test/bootstrap-download-progress-demo.html";
     private By downloadButton = By.cssSelector("button#cricle-btn");
     private By precentText = By.cssSelector("div.percenttext");
+    private By halfProgress = By.cssSelector("div.slice.clipauto");
 
     @BeforeMethod
     public void setUp(){
@@ -34,7 +35,9 @@ public class Refresh {
         WebDriverWait wait = new WebDriverWait(this.driver, 10);
         driver.findElement(downloadButton).click();
 
+
         wait.until(ExpectedConditions.textToBePresentInElement(driver.findElement(precentText), "50%"));
+        wait.until(ExpectedConditions.presenceOfElementLocated(halfProgress));
         driver.navigate().refresh();
     }
 }
