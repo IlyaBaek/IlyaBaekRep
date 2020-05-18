@@ -42,7 +42,7 @@ public class AuthorizationTest {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.logIn(username,password);
 
-        this.takeScreenshot(driver,"E://homePageLogin.png");
+        this.takeScreenshot(driver,"src/test/resources/homePageLoginTest.png" );
         assertEquals(homePage.getCurrentUserText(), usertext);
     }
 
@@ -55,7 +55,7 @@ public class AuthorizationTest {
 
         homePage.logOut();
 
-        this.takeScreenshot(driver,"E://homePageLogout.png");
+        this.takeScreenshot(driver,"src/test/resources/homePageLogoutTest.png");
         Assert.assertTrue(homePage.getUnauthorized());
     }
 
