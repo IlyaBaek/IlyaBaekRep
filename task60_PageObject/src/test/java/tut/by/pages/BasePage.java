@@ -1,5 +1,6 @@
 package tut.by.pages;
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -17,7 +18,12 @@ public class BasePage {
     }
 
     protected WebElement getElement(By locartor){
-        return wait.until(ExpectedConditions.presenceOfElementLocated(locartor));
+        try{
+            return wait.until(ExpectedConditions.presenceOfElementLocated(locartor));
+        }
+        catch (ElementNotVisibleException ex){
+            throw ex;
+        }
     }
 
     protected void clickOn(By locator){

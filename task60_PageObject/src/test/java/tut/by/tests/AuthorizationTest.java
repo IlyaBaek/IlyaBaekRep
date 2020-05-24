@@ -1,4 +1,5 @@
 package tut.by.tests;
+import SingletonClass.InitialSingleton;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
@@ -18,24 +19,26 @@ public class AuthorizationTest {
     private static final String usertext = "Selenium Test";
     private WebDriver driver;
 
-
     @BeforeMethod
     public void setUp(){
         driver = new ChromeDriver();
         driver.get(url);
         driver.manage().window().maximize();
+//        InitialSingleton.initialize();
+//        InitialSingleton.getDriver().get(url);
+//        driver = InitialSingleton.getDriver();
     }
 
     @AfterMethod
     public void endUp(){
         driver.close();
+//        InitialSingleton.quitDriver();
     }
 
     @Test
     public void loginTest() {
         HomePage homePage = new HomePage(driver);
-        homePage.openLoginWindow();
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = homePage.openLoginWindow();;
 
         loginPage.logIn(username,password);
 
@@ -45,12 +48,11 @@ public class AuthorizationTest {
     @Test
     public void logoutTest() {
         HomePage homePage = new HomePage(driver);
-        homePage.openLoginWindow();
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = homePage.openLoginWindow();
         loginPage.logIn(username,password);
 
         homePage.logOut();
 
-        Assert.assertTrue(homePage.getUnauthorized());
+        Assert.assertTrue(homePage.getUnauthorized(),"Return true if login button is available(the user is not logged in");
     }
 }
