@@ -1,6 +1,6 @@
 package tut.by.pages;
+import SingletonClass.WebDriverSingleton;
 import org.openqa.selenium.By;
-import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -9,21 +9,15 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class BasePage {
     private static final int TIMEOUT = 5;
     private static final int POLLING = 100;
-    protected WebDriver driver;
     private WebDriverWait wait;
 
-    public BasePage(WebDriver driver){
-        this.driver = driver;
+    public BasePage(){
+        WebDriver driver = WebDriverSingleton.getDriver();
         wait = new WebDriverWait(driver, TIMEOUT, POLLING);
     }
 
     protected WebElement getElement(By locartor){
-        try{
-            return wait.until(ExpectedConditions.presenceOfElementLocated(locartor));
-        }
-        catch (ElementNotVisibleException ex){
-            throw ex;
-        }
+        return wait.until(ExpectedConditions.presenceOfElementLocated(locartor));
     }
 
     protected void clickOn(By locator){
