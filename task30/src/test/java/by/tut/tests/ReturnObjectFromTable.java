@@ -12,6 +12,8 @@ import org.testng.annotations.Test;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Test(groups = "task40")                                                                                        //Point9
@@ -53,10 +55,42 @@ public class ReturnObjectFromTable {
         int firstPage = Integer.parseInt(driver.findElement(firstPageElement).getText());
         List<EmployeeTableModel> tableModelArrayList = new ArrayList<>();
 
+        Predicate<WebElement> isAgeOK = row -> Integer.parseInt(row.findElement(ageElement).getText()) > age ;
+        Predicate<WebElement> isSalaryOK = row -> Integer.parseInt(row.findElement(salaryElement).getAttribute("data-order")) > salary;
+
         IntStream.rangeClosed(firstPage, lastPage).forEach(page-> {
+            List < WebElement > rowList = driver.findElements(rowElement)
+                    .stream()
+                    .filter(row -> isAgeOK.test(row) && isSalaryOK.test(row))
+                    .collect(Collectors.toList());
+
+            rowList.forEach((element) -> {
+                EmployeeTableModel employee = new EmployeeTableModel();
+
+                employee.setName(element.findElement(nameElement).getText());
+                employee.setPosition(element.findElement(positionElement).getText());
+                employee.setOffice(element.findElement(officeElement).getText());
+
+                tableModelArrayList.add(employee);
+            });
+            driver.findElement(nextButton).click();
+        });
+
+        //it just shows what we've done
+        for (EmployeeTableModel EmployeeTableModel : tableModelArrayList) {
+            System.out.println(EmployeeTableModel.getName() + " / " + EmployeeTableModel.getPosition() + " / " + EmployeeTableModel.getOffice() );
+        }
+        return tableModelArrayList;
+    }
+}
+
+
+ /*
+            IntStream.rangeClosed(firstPage, lastPage).forEach(page-> {
             List < WebElement > rowList = driver.findElements(rowElement);
 
             rowList.forEach((element) -> {
+
                 int employeeAge = Integer.parseInt(element.findElement(ageElement).getText());
                 int employeeSalary = Integer.parseInt(element.findElement(salaryElement).getAttribute("data-order"));
 
@@ -71,16 +105,7 @@ public class ReturnObjectFromTable {
             });
             driver.findElement(nextButton).click();
         });
-
-        //it just shows what we've done
-        for (EmployeeTableModel EmployeeTableModel : tableModelArrayList) {
-            System.out.println(EmployeeTableModel.getName() + " / " + EmployeeTableModel.getPosition() + " / " + EmployeeTableModel.getOffice() );
-        }
-
-        return tableModelArrayList;
-    }
-
-}
+ */
 
 
 
