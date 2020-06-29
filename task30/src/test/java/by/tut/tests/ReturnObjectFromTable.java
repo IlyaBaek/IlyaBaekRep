@@ -29,6 +29,7 @@ public class ReturnObjectFromTable {
     private By officeElement = By.cssSelector("td:nth-child(3)");
     private By ageElement = By.cssSelector("td:nth-child(4)");
     private By salaryElement = By.cssSelector("td:nth-child(6)");
+    private List<EmployeeTableModel> tableModelArrayList = new ArrayList<>();
 
     @BeforeMethod
     public void setUp() {
@@ -45,42 +46,44 @@ public class ReturnObjectFromTable {
 
     @Test
     public void callGetDataFromTabelTestMethod() {
-        int age = 20;
-        int salary = 675000;
+        int age = 40;
+        int salary = 100000;
         getDataFromTabelTest(age, salary);
     }
 
     public List<EmployeeTableModel> getDataFromTabelTest(int age, int salary) {
         int lastPage = Integer.parseInt(driver.findElement(lastPageElement).getText());
         int firstPage = Integer.parseInt(driver.findElement(firstPageElement).getText());
-        List<EmployeeTableModel> tableModelArrayList = new ArrayList<>();
 
         Predicate<WebElement> isAgeOK = row -> Integer.parseInt(row.findElement(ageElement).getText()) > age ;
         Predicate<WebElement> isSalaryOK = row -> Integer.parseInt(row.findElement(salaryElement).getAttribute("data-order")) > salary;
 
         IntStream.rangeClosed(firstPage, lastPage).forEach(page-> {
-            List < WebElement > rowList = driver.findElements(rowElement)
-                    .stream()
-                    .filter(row -> isAgeOK.test(row) && isSalaryOK.test(row))
-                    .collect(Collectors.toList());
-
-            rowList.forEach((element) -> {
-                EmployeeTableModel employee = new EmployeeTableModel();
-
-                employee.setName(element.findElement(nameElement).getText());
-                employee.setPosition(element.findElement(positionElement).getText());
-                employee.setOffice(element.findElement(officeElement).getText());
-
-                tableModelArrayList.add(employee);
-            });
+            List < WebElement > rowList = driver.findElements(rowElement);
+                   rowList.stream()
+                   .filter(row -> isAgeOK.test(row) && isSalaryOK.test(row))
+                   .map(this::setValuesForEmployeeTabelModel)
+                   .collect(Collectors.toList());
             driver.findElement(nextButton).click();
         });
-
         //it just shows what we've done
         for (EmployeeTableModel EmployeeTableModel : tableModelArrayList) {
             System.out.println(EmployeeTableModel.getName() + " / " + EmployeeTableModel.getPosition() + " / " + EmployeeTableModel.getOffice() );
         }
         return tableModelArrayList;
+    }
+
+    private List <WebElement> setValuesForEmployeeTabelModel(WebElement rowToSet)
+    {
+        EmployeeTableModel employee = new EmployeeTableModel();
+
+        employee.setName(rowToSet.findElement(nameElement).getText());
+        employee.setPosition(rowToSet.findElement(positionElement).getText());
+        employee.setOffice(rowToSet.findElement(officeElement).getText());
+
+        tableModelArrayList.add(employee);
+
+        return null;
     }
 }
 
