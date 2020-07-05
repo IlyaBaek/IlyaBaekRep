@@ -1,21 +1,26 @@
+import java.util.Random;
+
 public class Singleton {
-    private static Singleton someObject;
+    private static Singleton object;
+    Random rand = new Random();
+    int randomValue;
 
     private Singleton(){
-
+        randomValue = rand.nextInt();
     }
 
     public static Singleton getInstance(){
-        if(someObject == null)
+        if(object == null)
         {
-            someObject = new Singleton();
+            object = new Singleton();
         }
-        return someObject;
+        return object;
     }
 
-    public void demoMetod(){
-        System.out.println("demo");
+    public int returnRandomValue(){
+        return randomValue;
     }
 }
+
 
 
