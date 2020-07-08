@@ -6,15 +6,15 @@ public class LoggedHomePage extends BasePage {
     private static final By USER_NAME = By.className("uname");
     private static final By LOGOUT_BUTTON = By.className("auth__reg");
 
-    public LoggedHomePage(){
+    public LoggedHomePage() {
         isDisplayed(USER_NAME);
     }
 
-    public String getCurrentUserText(){
+    public String getCurrentUserText() {
         return getText(USER_NAME);
     }
 
-    public NotLoggedHomePage logOut(){
+    public NotLoggedHomePage logOut() {
         clickOn(USER_NAME);
         clickOn(LOGOUT_BUTTON);
         return new NotLoggedHomePage();
