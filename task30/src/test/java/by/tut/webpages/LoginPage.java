@@ -6,11 +6,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 public class LoginPage {
-    WebDriver driver;
-    By SignInWindowButton = By.className("enter");
-    By LoginInput = By.name("login");
-    By PasswordInput = By.name("password");
-    By SignInButton = By.xpath("//input[@tabindex='4']");
+    private WebDriver driver;
+    private By SignInWindowButton = By.className("enter");
+    private By LoginInput = By.name("login");
+    private By PasswordInput = By.name("password");
+    private By SignInButton = By.cssSelector("div.b-hold>input[type='submit']");
 
     public LoginPage(WebDriver driver){
         this.driver = driver;
@@ -29,7 +29,7 @@ public class LoginPage {
     }
 
     public void clickSignInButton() {
-        WebDriverWait wait = new WebDriverWait(this.driver, 10);
+        WebDriverWait wait = new WebDriverWait(this.driver, 5);
         wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(SignInButton))).click();
     }
 
