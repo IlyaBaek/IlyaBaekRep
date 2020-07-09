@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 public class WebDriverSingleton {
     private static WebDriverSingleton object = null;
-    private static WebDriver driver;
+    private WebDriver driver;
 
     private WebDriverSingleton() {
         driver = new ChromeDriver();
@@ -22,11 +22,11 @@ public class WebDriverSingleton {
         return object;
     }
 
-    public static WebDriver getDriver() {
+    public WebDriver getDriver() {
         return driver;
     }
 
-    public static void driverQuit() {
+    public void driverQuit() {
         getDriver().quit();
         object = null;
     }

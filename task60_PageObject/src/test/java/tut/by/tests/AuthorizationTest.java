@@ -19,13 +19,13 @@ public class AuthorizationTest {
 
     @BeforeMethod
     public void setUp() {
-        WebDriverSingleton.getInstance();
-        WebDriverSingleton.getDriver().get(url);
+        WebDriverSingleton.getInstance().getDriver().get(url);
+
     }
 
     @AfterMethod
     public void endUp() {
-        WebDriverSingleton.driverQuit();
+        WebDriverSingleton.getInstance().driverQuit();
     }
 
     @Test

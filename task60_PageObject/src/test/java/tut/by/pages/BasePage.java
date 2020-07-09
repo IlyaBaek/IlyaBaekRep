@@ -13,8 +13,7 @@ public class BasePage {
     private WebDriverWait wait;
 
     public BasePage() {
-        WebDriverSingleton.getInstance();
-        WebDriver driver = WebDriverSingleton.getDriver();
+        WebDriver driver = WebDriverSingleton.getInstance().getDriver();
         wait = new WebDriverWait(driver, TIMEOUT, POLLING);
     }
 
