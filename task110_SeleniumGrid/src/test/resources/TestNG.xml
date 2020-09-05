@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="AuthorizationTest" verbose="2">
+<suite name="Studding tests" verbose="1">
     <test name="AuthorizationTest">
         <classes>
             <class name="tut.by.tests.AuthorizationTest" />
+        </classes>
+    </test>
+    <test name="OneMoreTest" >
+        <classes>
+            <class name="tut.by.tests.OneMoreTest"/>
         </classes>
     </test>
 </suite>
