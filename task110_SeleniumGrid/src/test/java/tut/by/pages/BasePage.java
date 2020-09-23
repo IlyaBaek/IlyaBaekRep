@@ -1,10 +1,9 @@
 package tut.by.pages;
 
 import WebDriverSingleton.WebDriverSingleton;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -16,21 +15,18 @@ public class BasePage {
     public BasePage() {
         WebDriver driver = WebDriverSingleton.getInstance().getDriver();
         wait = new WebDriverWait(driver, TIMEOUT, POLLING);
-        PageFactory.initElements(new AjaxElementLocatorFactory(driver, TIMEOUT), this);
     }
 
-    protected void clickOn(WebElement locator) {
-        wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
-    }
-
-    protected void typeIn(WebElement locator, String string) {
-        wait.until(ExpectedConditions.elementToBeClickable(locator)).sendKeys(string);
-    }
-}
-
-/*
     protected WebElement getElement(By locartor) {
         return wait.until(ExpectedConditions.presenceOfElementLocated(locartor));
+    }
+
+    protected void clickOn(By locator) {
+        wait.until(ExpectedConditions.elementToBeClickable(getElement(locator))).click();
+    }
+
+    protected void typeIn(By locator, String string) {
+        wait.until(ExpectedConditions.elementToBeClickable(getElement(locator))).sendKeys(string);
     }
 
     protected boolean isEnabled(By locator) {
@@ -44,4 +40,4 @@ public class BasePage {
     protected String getText(By locator) {
         return getElement(locator).getText();
     }
-*/
+}
