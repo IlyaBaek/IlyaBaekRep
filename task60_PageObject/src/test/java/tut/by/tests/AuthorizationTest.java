@@ -1,9 +1,13 @@
 package tut.by.tests;
 
+import TutbyListener.TutByListener;
 import WebDriverSingleton.WebDriverSingleton;
-import org.testng.Assert;
+import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
+import io.qameta.allure.TmsLink;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import tut.by.pages.LoggedHomePage;
 import tut.by.pages.LoginPage;
@@ -11,16 +15,17 @@ import tut.by.pages.NotLoggedHomePage;
 
 import static org.testng.Assert.assertEquals;
 
+@Listeners(TutByListener.class)
 public class AuthorizationTest {
     private static final String url = "https://www.tut.by/";
     private static final String username = "seleniumtests@tut.by";
     private static final String password = "123456789zxcvbn";
     private static final String usertext = "Selenium Test";
+    private static final String unauthorizedText = "Войти";
 
     @BeforeMethod
     public void setUp() {
         WebDriverSingleton.getInstance().getDriver().get(url);
-
     }
 
     @AfterMethod
@@ -28,7 +33,10 @@ public class AuthorizationTest {
         WebDriverSingleton.getInstance().driverQuit();
     }
 
-    @Test
+    @Feature("Login")
+    @Description("Verify ability to log in")
+    @TmsLink("TC-1")
+    @Test(groups = "Authorization")
     public void loginTest() {
         NotLoggedHomePage notLoggedHomePage = new NotLoggedHomePage();
         LoginPage loginPage = notLoggedHomePage.openLoginWindow();
@@ -38,7 +46,10 @@ public class AuthorizationTest {
         assertEquals(loggedHomePage.getCurrentUserText(), usertext);
     }
 
-    @Test
+    @Feature("Logout")
+    @Description("Verify ability to log out")
+    @TmsLink("TC-2")
+    @Test(groups = "Authorization")
     public void logoutTest() {
         NotLoggedHomePage notLoggedHomePage = new NotLoggedHomePage();
         LoginPage loginPage = notLoggedHomePage.openLoginWindow();
@@ -46,6 +57,6 @@ public class AuthorizationTest {
 
         loggedHomePage.logOut();
 
-        Assert.assertTrue(notLoggedHomePage.getUnauthorized(), "Return true if login button is available(the user is not logged in");
+        assertEquals(notLoggedHomePage.getUnauthorizedText(), unauthorizedText);
     }
 }
