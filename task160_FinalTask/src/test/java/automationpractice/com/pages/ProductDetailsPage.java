@@ -14,13 +14,17 @@ public class ProductDetailsPage extends BasePage {
     private WebElement ADDED_TO_WISHLIST_POPUP_CLOSE_BUTTON;
 
     public ProductDetailsPage() {
-
+        ADD_TO_CART_BUTTON.isDisplayed();
     }
 
-    public void pressAddToWishlistButton() throws InterruptedException {
+    public void pressAddToWishlistButton() {
         clickOn(ADD_TO_WISHLIST_BUTTON);
         clickOn(ADDED_TO_WISHLIST_POPUP_CLOSE_BUTTON);
-        Thread.sleep(1000);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getProductId() {

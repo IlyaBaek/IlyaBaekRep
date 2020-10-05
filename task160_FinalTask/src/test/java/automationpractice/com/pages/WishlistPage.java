@@ -1,5 +1,6 @@
 package automationpractice.com.pages;
 
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -27,7 +28,7 @@ public class WishlistPage extends BasePage {
     private WebElement SAVE_WISHLIST_BUTTON;
 
     public WishlistPage() {
-
+        NEW_WISHLIST_NAME_INPUT.isDisplayed();
     }
 
     //Return True if there are no wishlists created yet, return False if there are some wishlists
@@ -35,8 +36,10 @@ public class WishlistPage extends BasePage {
         try {
             WISHLIST_TABLE.isDisplayed();
             return true;
-        } catch (Exception e) {
+        } catch (NoSuchElementException e) {
+            System.out.println("there is no Wishlists");
             return false;
+
         }
     }
 

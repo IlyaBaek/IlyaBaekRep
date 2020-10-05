@@ -43,7 +43,8 @@ public class LoggedHomePage extends BasePage {
 
     public Double getTotalCartPrice() {
         moveMouse(CART_SECTION);
-        return Double.parseDouble(getText(TOTAL_CART_PRICE).replace("$", ""))
-                - Double.parseDouble(getText(TOTAL_CART_SHIPPING_PRICE).replace("$", ""));
+        Double totalCart = Double.parseDouble(getText(TOTAL_CART_PRICE).replace("$", ""));
+        Double totalShipping = Double.parseDouble(getText(TOTAL_CART_SHIPPING_PRICE).replace("$", ""));
+        return totalCart - totalShipping;
     }
 }

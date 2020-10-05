@@ -1,6 +1,8 @@
 package automationpractice.com.tests;
 
 import WebDriverSingleton.WebDriverSingleton;
+import automationpractice.com.Models.UserAccontModel;
+import automationpractice.com.pages.CreateAnAccountPage;
 import automationpractice.com.pages.LoggedHomePage;
 import automationpractice.com.pages.NotLoggedHomePage;
 import automationpracticeListener.AutomationpracticeListener;
@@ -12,14 +14,16 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import java.util.Random;
+
 import static org.testng.Assert.assertTrue;
 
 @Listeners(AutomationpracticeListener.class)
-public class LoginTest {
+public class CreateAnAccountTest {
     private static final String URL = "http://automationpractice.com/index.php?controller=authentication&back=my-account";
-    private static final String EMAIL = "1@1.com";
-    private static final String PASSWORD = "QWEQWE";
-
+    private Random randomEmail = new Random();
+    private int randomInt = randomEmail.nextInt(10000);
+    private String email = "test" + randomInt + "@com.com";
 
     @BeforeClass
     public static void setUp() {
@@ -31,15 +35,17 @@ public class LoginTest {
         WebDriverSingleton.getInstance().driverQuit();
     }
 
-    @Feature("Login")
-    @Description("Verify ability to log in")
-    @TmsLink("TC-2")
+    @Feature("Create An Account")
+    @Description("Verify ability to create an account")
+    @TmsLink("TC-1")
     @Test
-    public void loginTest() {
+    public void createAccountTest() {
         NotLoggedHomePage notLoggedHomePage = new NotLoggedHomePage();
-        LoggedHomePage loggedHomePage = notLoggedHomePage.logIn(EMAIL, PASSWORD);
+        CreateAnAccountPage createAnAccountPage = notLoggedHomePage.openCreateAccountPage(email);
+        UserAccontModel userAccontModel = new UserAccontModel();
 
+        LoggedHomePage loggedHomePage = createAnAccountPage.register(userAccontModel);
         assertTrue(loggedHomePage.getAuthorized(),
-                "if True than user is logged in and his profile button is displayed");
+                "if True than user is created and logged in and his profile button is displayed");
     }
 }

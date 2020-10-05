@@ -1,8 +1,8 @@
 package automationpractice.com.pages;
 
+import automationpractice.com.Models.UserAccontModel;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.Select;
 
 public class CreateAnAccountPage extends BasePage {
     @FindBy(id = "submitAccount")
@@ -56,40 +56,61 @@ public class CreateAnAccountPage extends BasePage {
         REGISTER_BUTTON.isDisplayed();
     }
 
-    public LoggedHomePage register(String firstName,
-                                   String lastName,
-                                   String email,
-                                   String password,
-                                   Integer dayOfBirth,
-                                   Integer monthOfBirth,
-                                   Integer yearOfBirth,
-                                   String addressFirstName,
-                                   String addressLastName,
-                                   String address,
-                                   String city,
-                                   Integer state,
-                                   String zipPostcode,
-                                   //Integer country,
-                                   String mobilePhone,
-                                   String addressAlias
-    ) {
-        typeIn(FIRST_NAME_INPUT, firstName);
-        typeIn(LAST_NAME_INPUT, lastName);
-        typeIn(EMAIL_INPUT, email);
-        typeIn(PASSWORD_INPUT, password);
-        selectFromDropdown(DAY_OF_BIRTH_SELECT, dayOfBirth);
-        selectFromDropdown(MONTH_OF_BIRTH_SELECT, monthOfBirth);
-        selectFromDropdown(YEAR_OF_BIRTH_SELECT, yearOfBirth);
-        typeIn(ADDRESS_FIRST_NAME_INPUT, addressFirstName);
-        typeIn(ADDRESS_LAST_NAME_INPUT, addressLastName);
-        typeIn(ADDRESS_INPUT, address);
-        typeIn(CITY_INPUT, city);
-        selectFromDropdown(STATE_SELECT, state);
-        typeIn(POSTCODE_INPUT, zipPostcode);
+    public LoggedHomePage register(UserAccontModel newUser) {
+        typeIn(FIRST_NAME_INPUT, newUser.getFirstName());
+        typeIn(LAST_NAME_INPUT, newUser.getLastName());
+        //typeIn(EMAIL_INPUT, newUser.getEmail());
+        typeIn(PASSWORD_INPUT, newUser.getPassword());
+        selectFromDropdown(DAY_OF_BIRTH_SELECT, newUser.getDayOfBirth());
+        selectFromDropdown(MONTH_OF_BIRTH_SELECT, newUser.getMonthOfBirth());
+        selectFromDropdown(YEAR_OF_BIRTH_SELECT, newUser.getYearOfBirth());
+        typeIn(ADDRESS_FIRST_NAME_INPUT, newUser.getAddressFirstName());
+        typeIn(ADDRESS_LAST_NAME_INPUT, newUser.getAddressLastName());
+        typeIn(ADDRESS_INPUT, newUser.getAddress());
+        typeIn(CITY_INPUT, newUser.getCity());
+        selectFromDropdown(STATE_SELECT, newUser.getState());
+        typeIn(POSTCODE_INPUT, newUser.getZipPostcode());
         //selectFromDropdown(COUNTRY_SELECT,country);
-        typeIn(MOBILE_PHONE_INPUT, mobilePhone);
-        typeIn(ADDRESS_ALIAS_INPUT, addressAlias);
+        typeIn(MOBILE_PHONE_INPUT, newUser.getMobilePhone());
+        typeIn(ADDRESS_ALIAS_INPUT, newUser.getAddressAlias());
         clickOn(REGISTER_BUTTON);
         return new LoggedHomePage();
     }
 }
+   /* public UserAccontModel fillUserInfo(String firstName,
+                                        String lastName,
+                                        String email,
+                                        String password,
+                                        Integer dayOfBirth,
+                                        Integer monthOfBirth,
+                                        Integer yearOfBirth,
+                                        String addressFirstName,
+                                        String addressLastName,
+                                        String address,
+                                        String city,
+                                        Integer state,
+                                        String zipPostcode,
+                                        //Integer country,
+                                        String mobilePhone,
+                                        String addressAlias) {
+        UserAccontModel newUser = new UserAccontModel();
+
+        newUser.setFirstName(firstName);
+        newUser.setLastName(lastName);
+        //newUser.setEmail(email);
+        newUser.setPassword(password);
+        newUser.setDayOfBirth(dayOfBirth);
+        newUser.setMonthOfBirth(monthOfBirth);
+        newUser.setYearOfBirth(yearOfBirth);
+        newUser.setAddressFirstName(addressFirstName);
+        newUser.setAddressLastName(addressLastName);
+        newUser.setAddress(address);
+        newUser.setCity(city);
+        newUser.setState(state);
+        newUser.setZipPostcode(zipPostcode);
+        newUser.setMobilePhone(mobilePhone);
+        newUser.setAddressAlias(addressAlias);
+
+        return newUser;}
+
+*/

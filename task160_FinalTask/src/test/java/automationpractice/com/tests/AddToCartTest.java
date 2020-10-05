@@ -21,18 +21,18 @@ import static org.testng.Assert.assertEquals;
 
 @Listeners(AutomationpracticeListener.class)
 public class AddToCartTest {
-    private static final String url = "http://automationpractice.com/index.php?controller=authentication&back=my-account";
-    private static final String email = "1@1.com";
-    private static final String password = "QWEQWE";
+    private static final String URL = "http://automationpractice.com/index.php?controller=authentication&back=my-account";
+    private static final String EMAIL = "1@1.com";
+    private static final String PASSWORD = "QWEQWE";
     private HashSet<Integer> randomProduct = new HashSet<>();
     private Random random = new Random();
     private double sum;
-    DecimalFormat df = new DecimalFormat("#.00");
+    private DecimalFormat df = new DecimalFormat("#.00");
 
     @BeforeClass
     public static void setUp() {
-        WebDriverSingleton.getInstance().getDriver().get(url);
-        new NotLoggedHomePage().logIn(email, password);
+        WebDriverSingleton.getInstance().getDriver().get(URL);
+        new NotLoggedHomePage().logIn(EMAIL, PASSWORD);
     }
 
     @AfterClass

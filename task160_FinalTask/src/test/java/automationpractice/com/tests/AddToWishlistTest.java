@@ -18,17 +18,17 @@ import static org.testng.Assert.assertEquals;
 
 @Listeners(AutomationpracticeListener.class)
 public class AddToWishlistTest {
-    private static final String url = "http://automationpractice.com/index.php?controller=authentication&back=my-account";
-    private static final String email = "1@1.com";
-    private static final String password = "QWEQWE";
+    private static final String URL = "http://automationpractice.com/index.php?controller=authentication&back=my-account";
+    private static final String EMAIL = "1@1.com";
+    private static final String PASSWORD = "QWEQWE";
     private static final String wishlistName = "WishlistName";
     private String addedProductId;
     private String wishlistProductId;
 
     @BeforeClass
     public static void setUp() {
-        WebDriverSingleton.getInstance().getDriver().get(url);
-        new NotLoggedHomePage().logIn(email, password);
+        WebDriverSingleton.getInstance().getDriver().get(URL);
+        new NotLoggedHomePage().logIn(EMAIL, PASSWORD);
     }
 
     @AfterClass
@@ -40,7 +40,7 @@ public class AddToWishlistTest {
     @Description("Verify ability add product to auto-created wishlist")
     @TmsLink("TC-3")
     @Test
-    public void addAutoCreatedWishList() throws InterruptedException {
+    public void addAutoCreatedWishList() {
         LoggedHomePage loggedHomePage = new LoggedHomePage().openLoggedHomePage();
         WishlistPage wishlistPage = loggedHomePage.openMyWishlistsPage();
 
@@ -55,7 +55,7 @@ public class AddToWishlistTest {
     @Description("Verify ability add product to specific wishlist")
     @TmsLink("TC-4")
     @Test
-    public void addToSpecificWishList() throws InterruptedException {
+    public void addToSpecificWishList() {
         LoggedHomePage loggedHomePage = new LoggedHomePage().openLoggedHomePage();
         WishlistPage wishlistPage = loggedHomePage.openMyWishlistsPage();
 
@@ -67,22 +67,30 @@ public class AddToWishlistTest {
         assertEquals(addedProductId, wishlistProductId);
     }
 
-    public void checkIfWishlistIsEmpty(WishlistPage wishlistPage1) throws InterruptedException {
+    public void checkIfWishlistIsEmpty(WishlistPage wishlistPage1) {
         if (wishlistPage1.getWishlistState()) {
             do {
                 wishlistPage1.deleteWishlist();
-                Thread.sleep(2000);
+                threadSleep();
                 WebDriverSingleton.getInstance().getDriver().switchTo().alert().accept();
-                Thread.sleep(2000);
+                threadSleep();
             } while (wishlistPage1.getWishlistState());
         }
     }
 
-    public void addRandomProductDetailToWishlist(WishlistPage wishlistPage, LoggedHomePage loggedHomePage) throws InterruptedException {
+    public void addRandomProductDetailToWishlist(WishlistPage wishlistPage, LoggedHomePage loggedHomePage) {
         ProductDetailsPage productDetailsPage = wishlistPage.openRandomProductDetails();
         addedProductId = productDetailsPage.getProductId();
         productDetailsPage.pressAddToWishlistButton();
         wishlistPage = loggedHomePage.openLoggedHomePage().openMyWishlistsPage();
         wishlistProductId = wishlistPage.openMyWishList().openMyItemFromWishList().getProductId();
+    }
+
+    public void threadSleep() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
