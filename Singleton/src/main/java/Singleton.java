@@ -2,11 +2,12 @@ import java.util.Random;
 
 public class Singleton {
     private static Singleton object;
-    Random rand = new Random();
-    int randomValue;
+    private Random rand = new Random();
+    private ThreadLocal<Integer> randomValue = new ThreadLocal<>();
 
     private Singleton(){
-        randomValue = rand.nextInt();
+        //randomValue = rand.nextInt();
+        randomValue.set(0);
     }
 
     public static Singleton getInstance(){
@@ -18,7 +19,11 @@ public class Singleton {
     }
 
     public int returnRandomValue(){
-        return randomValue;
+        return randomValue.get();
+    }
+
+    public void setvalue(int myValue){
+        randomValue.set(myValue);
     }
 }
 
