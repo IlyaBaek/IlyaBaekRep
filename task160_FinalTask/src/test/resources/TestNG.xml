@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="FinalTask" verbose="2" parallel="classes" thread-count="2">
+    <test name="FinalTask">
+        <classes>
+            <class name="automationpractice.com.tests.LoginTest"/>
+            <class name="automationpractice.com.tests.AddToWishlistTest"/>
+            <class name="automationpractice.com.tests.CreateAnAccountTest"/>
+            <class name="automationpractice.com.tests.AddToCartTest"/>
+        </classes>
+    </test>
+</suite>
